@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
 class TapCircle extends CustomPainter {
+  TapCircle(this.offset);
+  List<double> offset;
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.drawCircle(const Offset(75, 75), 50, Paint());
+    canvas.drawCircle(Offset(offset[0], offset[1]), 50, Paint());
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     // TODO: implement shouldRepaint
-    throw UnimplementedError();
+    return false;
   }
-
 }

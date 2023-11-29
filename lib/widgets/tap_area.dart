@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:random_chooser/providers/tap_location_provider.dart';
 import 'package:random_chooser/widgets/tap_circle.dart';
 
-class TapArea extends StatefulWidget {
+class TapArea extends ConsumerStatefulWidget {
   const TapArea({super.key});
 
   @override
-  State<TapArea> createState() => _TapAreaState();
+  ConsumerState<TapArea> createState() => _TapAreaState();
 }
 
-class _TapAreaState extends State<TapArea> {
+class _TapAreaState extends ConsumerState<TapArea> {
   @override
   Widget build(BuildContext context) {
+    var offset = ref.watch(tapCoordinatesProvider);
     return CustomPaint(
-      painter: TapCircle(),
+      painter: TapCircle(offset),
     );
   }
 }
