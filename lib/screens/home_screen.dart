@@ -14,31 +14,52 @@ class _HomeState extends ConsumerState<Home> {
   @override
   Widget build(BuildContext context) {
     var tapCoordinates = ref.watch(tapCoordinatesProvider.notifier);
-    var offset = ref.watch(tapCoordinatesProvider);
+    var offsets = ref.watch(tapCoordinatesProvider);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Random Chooser"),
-      ),
-      body: Stack(children: [
-        GestureDetector(
-          onTapDown: (TapDownDetails details) {
-            tapCoordinates.addCoordinates(
-              details.globalPosition,
-            );
-            print(details.globalPosition);
+      // appBar: AppBar(
+      //   title: const Text("Random Chooser"),
+      // ),
+      body: Container(
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFF1a1a1a), Color(0xFF333333)],
+        )),
+        child: Listener(
+          onPointerDown: (e) {
+            double x = e.position.dx.round().toDouble();
+            double y = (e.position.dy).round().toDouble();
+
+            tapCoordinates.addCoordinates(Offset(x, y));
           },
-          onTapUp: (TapUpDetails details) {
-            tapCoordinates.addCoordinates(const Offset(0,0));
+          onPointerMove: (e) {
+            double x = e.position.dx.round().toDouble();
+            double y = (e.position.dy).round().toDouble();
+
+            tapCoordinates.addCoordinates(Offset(x, y));
+          },
+          onPointerUp: (e) {
+            double x = e.position.dx.round().toDouble();
+            double y = (e.position.dy).round().toDouble();
+
+            tapCoordinates.removeCoordinate(Offset(x, y));
+          },
+          onPointerCancel: (e) {
+            double x = e.position.dx.round().toDouble();
+            double y = (e.position.dy).round().toDouble();
+
+            tapCoordinates.removeCoordinate(Offset(x, y));
           },
           child: CustomPaint(
             size: Size.infinite,
-            painter: TapCircle(
-                offset,
-                MediaQuery.of(context).padding.top +
-                    AppBar().preferredSize.height),
+            painter: TapCircle(offsets, 0
+                // MediaQuery.of(context).padding.top +
+                //     AppBar().preferredSize.height
+                ),
           ),
         ),
-      ]),
+      ),
     );
   }
 }
