@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 
 class TapCircle extends CustomPainter {
-  TapCircle(this.offset, this.appBarHeight);
-  Offset offset;
+  TapCircle(this.offsets, this.appBarHeight);
+  List<Offset> offsets;
   double appBarHeight;
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.drawCircle(Offset(offset.dx, offset.dy - appBarHeight), 50, Paint());
+    for (Offset offset in offsets) {
+      canvas.drawCircle(
+          Offset(offset.dx, offset.dy - appBarHeight),
+          50,
+          Paint()
+            ..color = Colors.white
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 10);
+    }
   }
 
   @override
