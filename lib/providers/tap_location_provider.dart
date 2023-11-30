@@ -1,21 +1,14 @@
+import 'package:flutter/material.dart';
 import 'package:riverpod/riverpod.dart';
 
-class TapCoordinatesNotifier extends StateNotifier<List<double>> {
-  TapCoordinatesNotifier() : super([0.0, 0.0]);
+class TapCoordinatesNotifier extends StateNotifier<Offset> {
+  TapCoordinatesNotifier() : super(const Offset(0, 0));
 
-  void addCoordinates(double x, double y) {
-    state = [x, y];
-  }
-
-  double getX() {
-    return state[0];
-  }
-
-  double getY() {
-    return state[1];
+  void addCoordinates(Offset offset) {
+    state = offset;
   }
 }
 
 final tapCoordinatesProvider =
-    StateNotifierProvider<TapCoordinatesNotifier, List<double>>(
+    StateNotifierProvider<TapCoordinatesNotifier, Offset>(
         (ref) => TapCoordinatesNotifier());
