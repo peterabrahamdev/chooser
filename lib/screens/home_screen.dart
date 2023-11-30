@@ -27,6 +27,9 @@ class _HomeState extends ConsumerState<Home> {
             );
             print(details.globalPosition);
           },
+          onTapUp: (TapUpDetails details) {
+            tapCoordinates.addCoordinates(const Offset(0,0));
+          },
           child: CustomPaint(
             size: Size.infinite,
             painter: TapCircle(
