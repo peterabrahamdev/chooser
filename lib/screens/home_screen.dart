@@ -37,19 +37,19 @@ class _HomeState extends ConsumerState<Home> {
             double x = e.position.dx.round().toDouble();
             double y = (e.position.dy).round().toDouble();
 
-            tapCoordinates.addCoordinates(Offset(x, y));
+            tapCoordinates.moveCoordinates(1, Offset(x, y));
           },
           onPointerUp: (e) {
             double x = e.position.dx.round().toDouble();
             double y = (e.position.dy).round().toDouble();
 
-            tapCoordinates.removeCoordinate(Offset(x, y));
+            tapCoordinates.removeCoordinate(1, Offset(x, y));
           },
           onPointerCancel: (e) {
             double x = e.position.dx.round().toDouble();
             double y = (e.position.dy).round().toDouble();
 
-            tapCoordinates.removeCoordinate(Offset(x, y));
+            tapCoordinates.removeCoordinate(1, Offset(x, y));
           },
           child: CustomPaint(
             size: Size.infinite,
