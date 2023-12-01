@@ -4,10 +4,8 @@ import 'package:riverpod/riverpod.dart';
 class TapCoordinatesNotifier extends StateNotifier<Map<int, Offset>> {
   TapCoordinatesNotifier() : super({});
 
-  int _nextId = 1;
-  void addCoordinates(Offset offset) {
-    state = {...state, _nextId: offset};
-    _nextId++;
+  void addCoordinates(int id, Offset offset) {
+    state = {...state, id: offset};
   }
 
   void moveCoordinates(int id, Offset offset) {
@@ -19,7 +17,7 @@ class TapCoordinatesNotifier extends StateNotifier<Map<int, Offset>> {
   void removeCoordinate(int id, Offset offset) {
     if (state.containsKey(id)) {
       state = Map.fromEntries(
-          state.entries.where((element) => element != element.key));
+          state.entries.where((element) => element.key != id));
     }
   }
 }

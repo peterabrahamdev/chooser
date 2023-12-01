@@ -28,28 +28,32 @@ class _HomeState extends ConsumerState<Home> {
         )),
         child: Listener(
           onPointerDown: (e) {
+            int pointerId = e.pointer;
             double x = e.position.dx.round().toDouble();
             double y = (e.position.dy).round().toDouble();
 
-            tapCoordinates.addCoordinates(Offset(x, y));
+            tapCoordinates.addCoordinates(pointerId, Offset(x, y));
           },
           onPointerMove: (e) {
+            int pointerId = e.pointer;
             double x = e.position.dx.round().toDouble();
             double y = (e.position.dy).round().toDouble();
 
-            tapCoordinates.moveCoordinates(1, Offset(x, y));
+            tapCoordinates.moveCoordinates(pointerId, Offset(x, y));
           },
           onPointerUp: (e) {
+            int pointerId = e.pointer;
             double x = e.position.dx.round().toDouble();
             double y = (e.position.dy).round().toDouble();
 
-            tapCoordinates.removeCoordinate(1, Offset(x, y));
+            tapCoordinates.removeCoordinate(pointerId, Offset(x, y));
           },
           onPointerCancel: (e) {
+            int pointerId = e.pointer;
             double x = e.position.dx.round().toDouble();
             double y = (e.position.dy).round().toDouble();
 
-            tapCoordinates.removeCoordinate(1, Offset(x, y));
+            tapCoordinates.removeCoordinate(pointerId, Offset(x, y));
           },
           child: CustomPaint(
             size: Size.infinite,
