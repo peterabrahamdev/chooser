@@ -1,27 +1,29 @@
-import 'package:flutter/material.dart';
+import 'package:random_chooser/models/tap.dart';
 import 'package:riverpod/riverpod.dart';
 
-class TapCoordinatesNotifier extends StateNotifier<Map<int, Offset>> {
-  TapCoordinatesNotifier() : super({});
+class TapCoordinatesNotifier extends StateNotifier<List<Tap>> {
+  TapCoordinatesNotifier() : super(<Tap>[]);
 
-  void addCoordinates(int id, Offset offset) {
-    state = {...state, id: offset};
+  void addCoordinates(Tap tap) {
+    state = <Tap>[...state, tap];
   }
 
-  void moveCoordinates(int id, Offset offset) {
-    if (state.containsKey(id)) {
-      state = {...state, id: offset};
+  void moveCoordinates(Tap tap) {
+    int index = state.indexWhere((element) => element.id == tap.id);
+    if (index != -1) {
+      state = [
+        ...state.sublist(0, index),
+        tap,
+        ...state.sublist(index + 1),
+      ];
     }
   }
 
-  void removeCoordinate(int id, Offset offset) {
-    if (state.containsKey(id)) {
-      state = Map.fromEntries(
-          state.entries.where((element) => element.key != id));
-    }
+  void removeCoordinate(Tap tap) {
+    state = state.where((element) => element.id != tap.id).toList();
   }
 }
 
 final tapCoordinatesProvider =
-    StateNotifierProvider<TapCoordinatesNotifier, Map<int, Offset>>(
+    StateNotifierProvider<TapCoordinatesNotifier, List<Tap>>(
         (ref) => TapCoordinatesNotifier());

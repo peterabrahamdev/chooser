@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:random_chooser/models/tap.dart';
 import 'package:random_chooser/providers/tap_location_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:random_chooser/widgets/tap_circle.dart';
@@ -29,32 +30,36 @@ class _HomeState extends ConsumerState<Home> {
             double x = e.position.dx.round().toDouble();
             double y = (e.position.dy).round().toDouble();
 
-            tapCoordinates.addCoordinates(pointerId, Offset(x, y));
+            tapCoordinates
+                .addCoordinates(Tap(id: pointerId, offset: Offset(x, y)));
           },
           onPointerMove: (e) {
             int pointerId = e.pointer;
             double x = e.position.dx.round().toDouble();
             double y = (e.position.dy).round().toDouble();
 
-            tapCoordinates.moveCoordinates(pointerId, Offset(x, y));
+            tapCoordinates
+                .moveCoordinates(Tap(id: pointerId, offset: Offset(x, y)));
           },
           onPointerUp: (e) {
             int pointerId = e.pointer;
             double x = e.position.dx.round().toDouble();
             double y = (e.position.dy).round().toDouble();
 
-            tapCoordinates.removeCoordinate(pointerId, Offset(x, y));
+            tapCoordinates
+                .removeCoordinate(Tap(id: pointerId, offset: Offset(x, y)));
           },
           onPointerCancel: (e) {
             int pointerId = e.pointer;
             double x = e.position.dx.round().toDouble();
             double y = (e.position.dy).round().toDouble();
 
-            tapCoordinates.removeCoordinate(pointerId, Offset(x, y));
+            tapCoordinates
+                .removeCoordinate(Tap(id: pointerId, offset: Offset(x, y)));
           },
           child: CustomPaint(
             size: Size.infinite,
-            painter: TapCircle(offsets, 0),
+            painter: TapCircle(offsets),
           ),
         ),
       ),
