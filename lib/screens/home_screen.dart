@@ -16,9 +16,6 @@ class _HomeState extends ConsumerState<Home> {
     var tapCoordinates = ref.watch(tapCoordinatesProvider.notifier);
     var offsets = ref.watch(tapCoordinatesProvider);
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text("Random Chooser"),
-      // ),
       body: Container(
         decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -57,10 +54,7 @@ class _HomeState extends ConsumerState<Home> {
           },
           child: CustomPaint(
             size: Size.infinite,
-            painter: TapCircle(offsets, 0
-                // MediaQuery.of(context).padding.top +
-                //     AppBar().preferredSize.height
-                ),
+            painter: TapCircle(offsets, 0),
           ),
         ),
       ),
