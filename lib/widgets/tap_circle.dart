@@ -7,13 +7,22 @@ class TapCircle extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     for (Tap tap in taps) {
-      canvas.drawCircle(
-          tap.offset,
-          50,
-          Paint()
-            ..color = Colors.white
-            ..style = PaintingStyle.stroke
-            ..strokeWidth = 10);
+      tap.isChosen
+          ? canvas.drawCircle(
+              tap.offset,
+              60,
+              Paint()
+                ..color = Colors.white
+                ..style = PaintingStyle.fill
+                ..strokeWidth = 10,
+            )
+          : canvas.drawCircle(
+              tap.offset,
+              60,
+              Paint()
+                ..color = Colors.white
+                ..style = PaintingStyle.stroke
+                ..strokeWidth = 10);
     }
   }
 
