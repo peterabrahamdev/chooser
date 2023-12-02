@@ -41,3 +41,15 @@ class TapCoordinatesNotifier extends StateNotifier<List<Tap>> {
 final tapCoordinatesProvider =
     StateNotifierProvider<TapCoordinatesNotifier, List<Tap>>(
         (ref) => TapCoordinatesNotifier());
+
+class NewPointerEventNotifier extends StateNotifier<bool> {
+  NewPointerEventNotifier() : super(false);
+
+  void changePointerEvent(bool isNewPointerEvent) {
+    state = isNewPointerEvent;
+  }
+}
+
+final newPointerEventProvider =
+    StateNotifierProvider<NewPointerEventNotifier, bool>(
+        (ref) => NewPointerEventNotifier());
