@@ -1,8 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:random_chooser/models/tap.dart';
 
-class TapCircle extends CustomPainter {
-  TapCircle(this.taps, this.animationValue);
+class TapCircle extends StatefulWidget {
+  const TapCircle(
+      {super.key, required this.taps, required this.animationValue});
+  final List<Tap> taps;
+  final double animationValue;
+
+  @override
+  State<TapCircle> createState() => _TapCircleState();
+}
+
+class _TapCircleState extends State<TapCircle> {
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      size: Size.infinite,
+      painter: _DrawTapCircle(widget.taps, widget.animationValue),
+    );
+  }
+}
+
+class _DrawTapCircle extends CustomPainter {
+  _DrawTapCircle(this.taps, this.animationValue);
   List<Tap> taps;
   double animationValue;
   @override

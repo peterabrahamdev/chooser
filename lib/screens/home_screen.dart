@@ -135,10 +135,7 @@ class _HomeState extends ConsumerState<Home>
                       fontWeight: FontWeight.bold),
                 ),
               ),
-            CustomPaint(
-              size: Size.infinite,
-              painter: TapCircle(offsets, animationController.value),
-            ),
+            TapCircle(taps: offsets, animationValue: animationController.value),
           ]),
         ),
       ),
