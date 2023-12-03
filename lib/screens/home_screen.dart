@@ -14,20 +14,47 @@ class Home extends ConsumerStatefulWidget {
   ConsumerState<Home> createState() => _HomeState();
 }
 
-class _HomeState extends ConsumerState<Home> {
+class _HomeState extends ConsumerState<Home>
+    with SingleTickerProviderStateMixin {
   Timer? randomTapTimer;
   var isScreenTapped = false;
+  late AnimationController animationController;
+  late CurvedAnimation curvedAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+    curvedAnimation =
+        CurvedAnimation(parent: animationController, curve: Curves.easeInOut);
+
+    animationController.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    randomTapTimer!.cancel();
+    animationController.dispose();
+    super.dispose();
+  }
 
   void _startRandomTapTimer() {
+    // animationController.reset();
+    // animationController.forward();
     int seconds = 3;
     randomTapTimer?.cancel(); // Cancel existing timer if any
     randomTapTimer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+      animationController.repeat(reverse: true);
       seconds--;
       Vibration.vibrate(duration: 10, amplitude: 200);
       if (seconds == 0) {
         Vibration.vibrate(duration: 300, amplitude: 200);
         timer.cancel();
         ref.watch(tapCoordinatesProvider.notifier).chooseRandomTap();
+        animationController.stop();
       }
     });
   }
@@ -89,6 +116,7 @@ class _HomeState extends ConsumerState<Home> {
               setState(() {
                 isScreenTapped = false;
               });
+              animationController.reset();
             }
           },
           onPointerCancel: (e) {
@@ -112,7 +140,7 @@ class _HomeState extends ConsumerState<Home> {
               ),
             CustomPaint(
               size: Size.infinite,
-              painter: TapCircle(offsets),
+              painter: TapCircle(offsets, animationController.value),
             ),
           ]),
         ),
