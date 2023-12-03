@@ -44,7 +44,7 @@ class _HomeState extends ConsumerState<Home> {
 
             tapCoordinates
                 .addCoordinates(Tap(id: pointerId, offset: Offset(x, y)));
-            if (offsets.length > 1) {
+            if (ref.watch(tapCoordinatesProvider).length > 1) {
               _startRandomTapTimer();
             }
           },
@@ -68,8 +68,11 @@ class _HomeState extends ConsumerState<Home> {
 
             tapCoordinates
                 .removeCoordinate(Tap(id: pointerId, offset: Offset(x, y)));
-            if (offsets.length > 1) {
+            print(ref.watch(tapCoordinatesProvider).length);
+            if (ref.watch(tapCoordinatesProvider).length > 1) {
               _startRandomTapTimer();
+            } else {
+              randomTapTimer?.cancel();
             }
           },
           onPointerCancel: (e) {
