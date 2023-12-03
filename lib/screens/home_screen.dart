@@ -22,7 +22,7 @@ class _HomeState extends ConsumerState<Home> {
     randomTapTimer?.cancel(); // Cancel existing timer if any
     randomTapTimer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       seconds--;
-      Vibration.vibrate(duration: 10, amplitude: 100);
+      Vibration.vibrate(duration: 10, amplitude: 200);
       if (seconds == 0) {
         Vibration.vibrate(duration: 300, amplitude: 200);
         timer.cancel();
