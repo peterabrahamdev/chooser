@@ -27,14 +27,20 @@ class TapCoordinatesNotifier extends StateNotifier<List<Tap>> {
   }
 
   void chooseRandomTap() {
+    // Handles the case when the list is empty
+    // Otherwise Random.nextInt is being called with an argument of 0 when state.length is 0.
+    // This results in a RangeError because nextInt requires a positive maximum value.
+    if (state.isEmpty) {
+      return;
+    }
     Random random = Random();
     int randomIndex = random.nextInt(state.length);
-    var chosenTap = state[randomIndex];
+    Tap chosenTap = state[randomIndex].copyWith(isChosen: true);
+
     state = [
-      ...state.sublist(0, randomIndex),
-      Tap(id: chosenTap.id, offset: chosenTap.offset, isChosen: true),
-      ...state.sublist(randomIndex + 1),
+      chosenTap,
     ];
+    print('${chosenTap.id}, ${chosenTap.offset}, ${chosenTap.isChosen}');
   }
 }
 
