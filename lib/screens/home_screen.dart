@@ -46,6 +46,7 @@ class _HomeState extends ConsumerState<Home> {
         )),
         child: Listener(
           onPointerDown: (e) {
+            Vibration.vibrate(duration: 10, amplitude: 200);
             int pointerId = e.pointer;
             double x = e.position.dx.round().toDouble();
             double y = (e.position.dy).round().toDouble();
