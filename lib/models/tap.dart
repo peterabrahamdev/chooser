@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 
 class Tap {
-  const Tap({required this.id, required this.offset, this.isChosen = false});
+  Tap({required this.id, required this.offset, this.isChosen = false});
 
   final int id;
   final Offset offset;
-  final bool isChosen;
+  bool isChosen;
+
+   Tap copyWith({
+    bool? isChosen,
+    Offset? offset,
+  }) {
+    return Tap(
+      id: id,
+      offset: offset ?? this.offset,
+      isChosen: isChosen ?? this.isChosen,
+    );
+  }
 }
