@@ -29,14 +29,18 @@ class _DrawTapCircle extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     for (Tap tap in taps) {
       tap.isChosen
-          ? canvas.drawCircle(
-              tap.offset,
-              85,
-              Paint()
-                ..color = Colors.white
-                ..style = PaintingStyle.fill)
+          ? drawWinCircle(canvas, tap.offset)
           : drawAnimatedCircle(canvas, tap.offset);
     }
+  }
+
+  void drawWinCircle(Canvas canvas, Offset offset) {
+    canvas.drawCircle(
+        offset,
+        85,
+        Paint()
+          ..color = Colors.white
+          ..style = PaintingStyle.fill);
   }
 
   void drawAnimatedCircle(Canvas canvas, Offset offset) {
