@@ -5,6 +5,7 @@ import 'package:random_chooser/models/tap.dart';
 import 'package:random_chooser/providers/tap_location_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:random_chooser/widgets/tap_circle.dart';
+import 'package:vibration/vibration.dart';
 
 class Home extends ConsumerStatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -17,9 +18,16 @@ class _HomeState extends ConsumerState<Home> {
   Timer? randomTapTimer;
 
   void _startRandomTapTimer() {
+    int seconds = 3;
     randomTapTimer?.cancel(); // Cancel existing timer if any
-    randomTapTimer = Timer(const Duration(seconds: 3), () {
-      ref.watch(tapCoordinatesProvider.notifier).chooseRandomTap();
+    randomTapTimer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+      seconds--;
+      Vibration.vibrate(duration: 10, amplitude: 100);
+      if (seconds == 0) {
+        Vibration.vibrate(duration: 300, amplitude: 200);
+        timer.cancel();
+        ref.watch(tapCoordinatesProvider.notifier).chooseRandomTap();
+      }
     });
   }
 
