@@ -53,14 +53,13 @@ class _HomeState extends ConsumerState<Home> {
             double x = e.position.dx.round().toDouble();
             double y = (e.position.dy).round().toDouble();
 
-            var targetOffset = offsets.firstWhere(
-                (element) => element.id == pointerId,
-                // Ensures that if an element is not found it doesn't throw an error
-                // It returns a default value instead
-                orElse: () => Tap(id: -1, offset: Offset(0, 0)));
-            // Update the offset using the new position
-            targetOffset = targetOffset.copyWith(offset: Offset(x, y));
-            tapCoordinates.moveCoordinates(targetOffset, Offset(x, y));
+            var targetIndex =
+                offsets.indexWhere((element) => element.id == pointerId);
+            if (targetIndex != -1) {
+              // Update the offset using the new position
+              tapCoordinates.moveCoordinates(
+                  offsets[targetIndex], Offset(x, y));
+            }
           },
           onPointerUp: (e) {
             int pointerId = e.pointer;
