@@ -16,7 +16,7 @@ class TapCoordinatesNotifier extends StateNotifier<List<Tap>> {
     if (index != -1) {
       state = [
         ...state.sublist(0, index),
-        Tap(id: tap.id, offset: offset, isChosen: tap.isChosen),
+        state[index].copyWith(offset: offset),
         ...state.sublist(index + 1),
       ];
     }
