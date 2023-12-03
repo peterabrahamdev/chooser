@@ -16,6 +16,7 @@ class Home extends ConsumerStatefulWidget {
 
 class _HomeState extends ConsumerState<Home> {
   Timer? randomTapTimer;
+  var isScreenTapped = false;
 
   void _startRandomTapTimer() {
     int seconds = 3;
@@ -46,6 +47,9 @@ class _HomeState extends ConsumerState<Home> {
         )),
         child: Listener(
           onPointerDown: (e) {
+            setState(() {
+              isScreenTapped = true;
+            });
             Vibration.vibrate(duration: 10, amplitude: 200);
             int pointerId = e.pointer;
             double x = e.position.dx.round().toDouble();
@@ -82,6 +86,9 @@ class _HomeState extends ConsumerState<Home> {
               _startRandomTapTimer();
             } else {
               randomTapTimer?.cancel();
+              setState(() {
+                isScreenTapped = false;
+              });
             }
           },
           onPointerCancel: (e) {
@@ -92,10 +99,22 @@ class _HomeState extends ConsumerState<Home> {
             tapCoordinates
                 .removeCoordinate(Tap(id: pointerId, offset: Offset(x, y)));
           },
-          child: CustomPaint(
-            size: Size.infinite,
-            painter: TapCircle(offsets),
-          ),
+          child: Stack(children: [
+            if (!isScreenTapped)
+              const Center(
+                child: Text(
+                  'Tap to choose!',
+                  style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            CustomPaint(
+              size: Size.infinite,
+              painter: TapCircle(offsets),
+            ),
+          ]),
         ),
       ),
     );
