@@ -1,8 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:random_chooser/models/tap.dart';
-
-
 
 class TapCircle extends CustomPainter {
   TapCircle(this.taps, this.animationValue);

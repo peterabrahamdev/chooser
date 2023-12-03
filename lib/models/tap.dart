@@ -7,7 +7,7 @@ class Tap {
   final Offset offset;
   bool isChosen;
 
-   Tap copyWith({
+  Tap copyWith({
     bool? isChosen,
     Offset? offset,
   }) {
