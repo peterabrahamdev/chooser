@@ -19,12 +19,7 @@ class _HomeState extends ConsumerState<Home> {
   void _startRandomTapTimer() {
     randomTapTimer?.cancel(); // Cancel existing timer if any
     randomTapTimer = Timer(const Duration(seconds: 3), () {
-      // if (ref.watch(newPointerEventProvider) == false) {
       ref.watch(tapCoordinatesProvider.notifier).chooseRandomTap();
-      // }
-      // ref
-      //     .watch(newPointerEventProvider.notifier)
-      //     .changePointerEvent(false); // Reset the flag after 3 seconds
     });
   }
 
@@ -32,7 +27,6 @@ class _HomeState extends ConsumerState<Home> {
   Widget build(BuildContext context) {
     var tapCoordinates = ref.watch(tapCoordinatesProvider.notifier);
     var offsets = ref.watch(tapCoordinatesProvider);
-    // Timer to reset isNewPointerEvent after 3 seconds
 
     return Scaffold(
       body: Container(
@@ -40,7 +34,7 @@ class _HomeState extends ConsumerState<Home> {
             gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Color(0xFF1a1a1a), Color(0xFF333333)],
+          colors: [Color(0xFF662D8C), Color(0xFFED1E79)],
         )),
         child: Listener(
           onPointerDown: (e) {
@@ -51,9 +45,6 @@ class _HomeState extends ConsumerState<Home> {
             tapCoordinates
                 .addCoordinates(Tap(id: pointerId, offset: Offset(x, y)));
             if (offsets.length > 1) {
-              // ref
-              //     .watch(newPointerEventProvider.notifier)
-              //     .changePointerEvent(true);
               _startRandomTapTimer();
             }
           },
@@ -62,9 +53,14 @@ class _HomeState extends ConsumerState<Home> {
             double x = e.position.dx.round().toDouble();
             double y = (e.position.dy).round().toDouble();
 
-            tapCoordinates.moveCoordinates(
-                offsets.firstWhere((element) => element.id == pointerId),
-                Offset(x, y));
+            var targetOffset = offsets.firstWhere(
+                (element) => element.id == pointerId,
+                // Ensures that if an element is not found it doesn't throw an error
+                // It returns a default value instead
+                orElse: () => Tap(id: -1, offset: Offset(0, 0)));
+            // Update the offset using the new position
+            targetOffset = targetOffset.copyWith(offset: Offset(x, y));
+            tapCoordinates.moveCoordinates(targetOffset, Offset(x, y));
           },
           onPointerUp: (e) {
             int pointerId = e.pointer;
@@ -74,9 +70,6 @@ class _HomeState extends ConsumerState<Home> {
             tapCoordinates
                 .removeCoordinate(Tap(id: pointerId, offset: Offset(x, y)));
             if (offsets.length > 1) {
-              // ref
-              //     .watch(newPointerEventProvider.notifier)
-              //     .changePointerEvent(true);
               _startRandomTapTimer();
             }
           },
