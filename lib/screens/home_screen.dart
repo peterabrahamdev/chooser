@@ -42,8 +42,6 @@ class _HomeState extends ConsumerState<Home>
   }
 
   void _startRandomTapTimer() {
-    // animationController.reset();
-    // animationController.forward();
     int seconds = 3;
     randomTapTimer?.cancel(); // Cancel existing timer if any
     randomTapTimer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
@@ -108,7 +106,6 @@ class _HomeState extends ConsumerState<Home>
 
             tapCoordinates
                 .removeCoordinate(Tap(id: pointerId, offset: Offset(x, y)));
-            print(ref.watch(tapCoordinatesProvider).length);
             if (ref.watch(tapCoordinatesProvider).length > 1) {
               _startRandomTapTimer();
             } else {
