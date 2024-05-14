@@ -49,7 +49,7 @@ class _HomeState extends ConsumerState<Home>
       seconds--;
       Vibration.vibrate(duration: 10, amplitude: 200);
       if (seconds == 0) {
-        Vibration.vibrate(duration: 300, amplitude: 200);
+        Vibration.vibrate(duration: 30, amplitude: 20);
         timer.cancel();
         ref.watch(tapCoordinatesProvider.notifier).chooseRandomTap();
         animationController.stop();
@@ -75,7 +75,7 @@ class _HomeState extends ConsumerState<Home>
             setState(() {
               isScreenTapped = true;
             });
-            Vibration.vibrate(duration: 10, amplitude: 200);
+            Vibration.vibrate(duration: 10, amplitude: 10);
             int pointerId = e.pointer;
             double x = e.position.dx.round().toDouble();
             double y = (e.position.dy).round().toDouble();
