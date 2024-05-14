@@ -2,6 +2,8 @@
 
 Random Finger Chooser is a lightweight, intuitive decision-making tool designed to streamline the process of selecting individuals from a group. Whether you're determining who goes first in a game, assigning tasks in a team setting, or simply settling a friendly dispute, this application offers a fair and engaging solution.
 
+![readme_pics](/readme_pics/chooser_readme_pics.png)
+
 ## Installation
 
 ### Google Play
